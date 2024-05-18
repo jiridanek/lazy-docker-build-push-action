@@ -39,7 +39,11 @@ jobs:
           set -x
           test "false" == "${{ steps.first-build.outputs.tag-existed }}"
           test "user/base" == "${{ steps.first-build.outputs.image-name }}"
-          docker image inspect ${{ steps.first-build.outputs.image-name-tag }}
+          docker image inspect ${{ steps.first-build.outputs.image-name-tag }} | tee first-inspect.json
+
+      - name: Clear build caches
+        shell: bash
+        run: docker builder prune --all --force
 
       - name: Second build
         uses: ./self-action
@@ -54,4 +58,5 @@ jobs:
           set -x
           test "true" == "${{ steps.second-build.outputs.tag-existed }}"
           test "${{ steps.first-build.outputs.image-name-tag }}" == ${{ steps.second-build.outputs.image-name-tag }}
-          docker image inspect ${{ steps.second-build.outputs.image-name-tag }}
+          docker image inspect ${{ steps.second-build.outputs.image-name-tag }} | tee second-inspect.json
+          diff -u first-inspect.json second-inspect.json
