@@ -141,7 +141,7 @@ runs:
       shell: bash
       run: |
         FILES=$(echo "${{ inputs.extra-inputs }}" | tr '\n' ' ')
-        python3 ${{ github.action_path }}/main.py --files $FILES
+        python3 ${{ github.action_path }}/main.py ${FILES:+--files $FILES}
 
     - name: Build image
       uses: docker/build-push-action@v5
