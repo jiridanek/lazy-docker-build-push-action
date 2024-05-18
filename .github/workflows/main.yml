@@ -53,5 +53,5 @@ jobs:
         run: |
           set -x
           test "true" == "${{ steps.second-build.outputs.tag-existed }}"
-          test "${{ steps.first-build.outputs.image-name }}" == ${{ steps.second-build.outputs.image-name-tag }}
+          test "${{ steps.first-build.outputs.image-name-tag }}" == ${{ steps.second-build.outputs.image-name-tag }}
           docker image inspect ${{ steps.second-build.outputs.image-name-tag }}
