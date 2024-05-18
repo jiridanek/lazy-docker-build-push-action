@@ -1,0 +1,57 @@
+name: main
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+
+jobs:
+  unit-tests:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - run: ./tests.py
+      - run: pip install -r script/requirements-dev.txt
+      - run: ./script/check
+
+  self-test-action:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          path: reference
+
+      - uses: actions/checkout@v4
+        with:
+          path: self-action
+
+      - uses: ./self-action
+        id: first-build
+        with:
+          context: .
+          file: reference/test-data/Dockerfile
+          tags: user/base
+
+      - name: Check
+        shell: bash
+        run: |
+          set -x
+          test "false" == "${{ steps.first-build.outputs.tag-existed }}"
+          test "user/base" == "${{ steps.first-build.outputs.image-name }}"
+          docker image inspect ${{ steps.first-build.outputs.image-name-tag }}
+
+      - uses: ./self-action
+        id: second-build
+        with:
+          context: .
+          file: reference/test-data/Dockerfile
+          tags: user/base
+
+      - name: Check
+        shell: bash
+        run: |
+          set -x
+          test "true" == "${{ steps.second-build.outputs.tag-existed }}"
+          test "${{ steps.first-build.outputs.image-name }}" == ${{ steps.second-build.outputs.image-name-tag }}
+          docker image inspect ${{ steps.second-build.outputs.image-name-tag }}
