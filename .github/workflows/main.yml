@@ -26,13 +26,14 @@ jobs:
         with:
           path: self-action
 
-      - uses: ./self-action
+      - name: First build
+        uses: ./self-action
         id: first-build
         with:
           context: reference/test-data
           tags: user/base
 
-      - name: Check
+      - name: Check first build
         shell: bash
         run: |
           set -x
@@ -40,13 +41,14 @@ jobs:
           test "user/base" == "${{ steps.first-build.outputs.image-name }}"
           docker image inspect ${{ steps.first-build.outputs.image-name-tag }}
 
-      - uses: ./self-action
+      - name: Second build
+        uses: ./self-action
         id: second-build
         with:
           context: reference/test-data
           tags: user/base
 
-      - name: Check
+      - name: Check second build
         shell: bash
         run: |
           set -x

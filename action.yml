@@ -136,7 +136,7 @@ outputs:
 runs:
   using: composite
   steps:
-    - name: Check
+    - name: Detect if image needs building
       id: main
       shell: bash
       # Composite actions don't automatically get environment variables set up
