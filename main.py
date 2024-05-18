@@ -76,8 +76,9 @@ def set_output(name: str, value: str | bool | list[str]) -> None:
 
 
 def get_dockerfile() -> Path:
-    # TODO: is this meant to be relative to the `context` input?
-    return Path(get_input('file') or 'Dockerfile')
+    if dockerfile := get_input('file'):
+        return Path(dockerfile)
+    return Path(get_input('context') or '.') / 'Dockerfile'
 
 
 def get_tags() -> list[str]:

@@ -28,7 +28,6 @@ class Tests(unittest.TestCase):
         self.addCleanup(self.dockerfile.close)
 
         self.inputs: dict[str, str] = {
-            'file': self.dockerfile.name,
             'tags': 'user/app',
         }
 
@@ -161,6 +160,28 @@ class Tests(unittest.TestCase):
         main.main([other])
 
         tag = 'content-hash-fc3cd4f2034293d3ca445cddb9d20dbfd2082087978050417c1dc7a5be0a9b3a'
+        name = f'user/app:{tag}'
+        self.assertEqual(
+            {
+                'build-required': True,
+                'image-name': 'user/app',
+                'image-name-tag': name,
+                'image-tag': tag,
+                'tag-existed': False,
+                'tags': [name],
+            },
+            self.outputs,
+        )
+
+    def test_explicit_file(self) -> None:
+        with open('other.dockerfile', mode='w') as f:
+            print("Moar", file=f)
+
+        self.inputs['file'] = 'other.dockerfile'
+
+        main.main([])
+
+        tag = 'content-hash-d3a0a8c55dea39d9066a9c02748fcbbbf72db2284610fbb181156250438c9b86'
         name = f'user/app:{tag}'
         self.assertEqual(
             {

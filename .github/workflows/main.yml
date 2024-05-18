@@ -29,8 +29,7 @@ jobs:
       - uses: ./self-action
         id: first-build
         with:
-          context: .
-          file: reference/test-data/Dockerfile
+          context: reference/test-data
           tags: user/base
 
       - name: Check
@@ -44,8 +43,7 @@ jobs:
       - uses: ./self-action
         id: second-build
         with:
-          context: .
-          file: reference/test-data/Dockerfile
+          context: reference/test-data
           tags: user/base
 
       - name: Check
