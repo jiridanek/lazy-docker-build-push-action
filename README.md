@@ -108,6 +108,6 @@ jobs:
             BASE_IMAGE=${{ steps.build-base.outputs.image-name-tag }}
 ```
 
-See also the [`./examples`](./examples/) directory.
+See also the [examples](./examples/) directory.
 
 [docker-bpa]: https://github.com/marketplace/actions/build-and-push-docker-images
