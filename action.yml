@@ -123,7 +123,7 @@ outputs:
       the hashed inputs.
 
   image-name-tag:
-    value: ${{ steps.main.outputs.image-name }}
+    value: ${{ steps.main.outputs.image-name-tag }}
     description: |
       The full name of the image, `<image-name>:<image-tag>` (e.g:
       `user/app:content-hash-1234abc...`), for convenience.
