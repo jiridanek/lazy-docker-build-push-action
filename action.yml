@@ -139,6 +139,44 @@ runs:
     - name: Check
       id: main
       shell: bash
+      # Composite actions don't automatically get environment variables set up
+      # from inputs. We could pass these another way, however there's a lot of
+      # them and this is a sensible approach. Also follows the same naming
+      # conventions. Pass through everything except secrets.
+      env:
+        INPUT_ADD-HOSTS: ${{ inputs.add-hosts }}
+        INPUT_ALLOW: ${{ inputs.allow }}
+        INPUT_ANNOTATIONS: ${{ inputs.annotations }}
+        INPUT_ATTESTS: ${{ inputs.attests }}
+        INPUT_BUILD-ARGS: ${{ inputs.build-args }}
+        INPUT_BUILD-CONTEXTS: ${{ inputs.build-contexts }}
+        INPUT_BUILDER: ${{ inputs.builder }}
+        INPUT_CACHE-FROM: ${{ inputs.cache-from }}
+        INPUT_CACHE-TO: ${{ inputs.cache-to }}
+        INPUT_CGROUP-PARENT: ${{ inputs.cgroup-parent }}
+        INPUT_CONTEXT: ${{ inputs.context }}
+        INPUT_FILE: ${{ inputs.file }}
+        INPUT_LABELS: ${{ inputs.labels }}
+        INPUT_LOAD: ${{ inputs.load }}
+        INPUT_NETWORK: ${{ inputs.network }}
+        INPUT_NO-CACHE: ${{ inputs.no-cache }}
+        INPUT_NO-CACHE-FILTERS: ${{ inputs.no-cache-filters }}
+        INPUT_OUTPUTS: ${{ inputs.outputs }}
+        INPUT_PLATFORMS: ${{ inputs.platforms }}
+        INPUT_PROVENANCE: ${{ inputs.provenance }}
+        INPUT_PULL: ${{ inputs.pull }}
+        INPUT_PUSH: ${{ inputs.push }}
+        INPUT_SBOM: ${{ inputs.sbom }}
+        # INPUT_SECRETS: ${{ inputs.secrets }}
+        # INPUT_SECRET-ENVS: ${{ inputs.secret-envs }}
+        # INPUT_SECRET-FILES: ${{ inputs.secret-files }}
+        INPUT_SHM-SIZE: ${{ inputs.shm-size }}
+        INPUT_SSH: ${{ inputs.ssh }}
+        INPUT_TAGS: ${{ inputs.tags }}
+        INPUT_TARGET: ${{ inputs.target }}
+        INPUT_ULIMIT: ${{ inputs.ulimit }}
+        # INPUT_GITHUB-TOKEN: ${{ inputs.github-token }}
+
       run: |
         FILES=$(echo -n "${{ inputs.extra-inputs }}" | tr '\n' ' ')
         python3 ${{ github.action_path }}/main.py ${FILES:+--files $FILES}

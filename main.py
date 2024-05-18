@@ -31,9 +31,13 @@ class MissingInput(ValueError):
 
 
 def _get_input(name: str) -> str:
-    # https://github.com/actions/toolkit/blob/ae38557bb0dba824cdda26ce787bd6b66cf07a83/packages/core/src/core.ts#L128
     env_name = name.replace(' ', '_').upper()
-    return os.environ.get(f'INPUT_{env_name}', '')
+    value = os.environ.get(f'INPUT_{env_name}')
+    if value is None and GITHUB_ACTIONS:
+        raise LookupError(
+            f"Missing input value {name!r} -- have you forgotten to update 'action.yml'?",
+        )
+    return value or ''
 
 
 def get_input(name: str, required: bool = False) -> str:
