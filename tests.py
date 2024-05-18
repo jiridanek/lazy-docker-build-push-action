@@ -160,15 +160,15 @@ class Tests(unittest.TestCase):
         main.main([other])
 
         tag = 'content-hash-fc3cd4f2034293d3ca445cddb9d20dbfd2082087978050417c1dc7a5be0a9b3a'
-        name = f'user/app:{tag}'
+        name_tag = f'user/app:{tag}'
         self.assertEqual(
             {
                 'build-required': True,
                 'image-name': 'user/app',
-                'image-name-tag': name,
+                'image-name-tag': name_tag,
                 'image-tag': tag,
                 'tag-existed': False,
-                'tags': [name],
+                'tags': [name_tag],
             },
             self.outputs,
         )
@@ -182,15 +182,15 @@ class Tests(unittest.TestCase):
         main.main([])
 
         tag = 'content-hash-d3a0a8c55dea39d9066a9c02748fcbbbf72db2284610fbb181156250438c9b86'
-        name = f'user/app:{tag}'
+        name_tag = f'user/app:{tag}'
         self.assertEqual(
             {
                 'build-required': True,
                 'image-name': 'user/app',
-                'image-name-tag': name,
+                'image-name-tag': name_tag,
                 'image-tag': tag,
                 'tag-existed': False,
-                'tags': [name],
+                'tags': [name_tag],
             },
             self.outputs,
         )
