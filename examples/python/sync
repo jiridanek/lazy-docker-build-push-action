@@ -1,0 +1,6 @@
+#!/bin/bash
+
+cd $(dirname $0)
+
+pip-compile --annotate --quiet requirements.in "$@"
+pip-compile --annotate --quiet requirements-dev.in "$@"

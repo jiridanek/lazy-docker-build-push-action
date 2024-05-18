@@ -105,8 +105,7 @@ jobs:
           push: true
           tags: user/app:latest
           build-args: |
-            BASE_IMAGE_NAME=${{ steps.build-base.outputs.image-name }}
-            BASE_IMAGE_TAG=${{ steps.build-base.outputs.image-tag }}
+            BASE_IMAGE=${{ steps.build-base.outputs.image-name-tag }}
 ```
 
 [docker-bpa]: https://github.com/marketplace/actions/build-and-push-docker-images

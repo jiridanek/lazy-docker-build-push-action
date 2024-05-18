@@ -1,0 +1,29 @@
+name: Examples
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+
+jobs:
+  python:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Build base image
+        uses: ./.
+        id: build-base
+        with:
+          context: examples/python
+          tags: python-example/base
+          extra-inputs: examples/python/requirements.txt
+
+      - name: Build and push
+        uses: docker/build-push-action@v5
+        with:
+          context: examples/python
+          tags: python-example/app:latest
+          build-args: |
+            RUNTIME_BASE_IMAGE=${{ steps.build-base.outputs.image-name-tag }}
