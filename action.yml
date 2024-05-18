@@ -183,7 +183,7 @@ runs:
 
     - name: Build image
       uses: docker/build-push-action@v5
-      if: ${{ steps.main.outputs.build-required }}
+      if: steps.main.outputs.build-required == 'true'
       id: build
       with:
         add-hosts: ${{ inputs.add-hosts }}
