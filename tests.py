@@ -13,7 +13,7 @@ import main
 class Tests(unittest.TestCase):
     maxDiff = None
 
-    _HASH = 'content-hash-facabdb2b0642ff20db8f3150326b37dfcc76755752109c2d917d7b9702268be'
+    _HASH = 'content-hash-4e401abc4f9bfd2f3555f4f2fe4c5521dd0e01013767dcafb28d964db043ffdf'
 
     def setUp(self) -> None:
         super().setUp()
@@ -159,7 +159,7 @@ class Tests(unittest.TestCase):
 
         main.main([other])
 
-        tag = 'content-hash-fc3cd4f2034293d3ca445cddb9d20dbfd2082087978050417c1dc7a5be0a9b3a'
+        tag = 'content-hash-681ff66e4818188726b5f13ce53dfbcdce46bd00449cec015dc94bbce7535606'
         name_tag = f'user/app:{tag}'
         self.assertEqual(
             {
@@ -181,7 +181,7 @@ class Tests(unittest.TestCase):
 
         main.main([])
 
-        tag = 'content-hash-d3a0a8c55dea39d9066a9c02748fcbbbf72db2284610fbb181156250438c9b86'
+        tag = 'content-hash-41663dd92c35e3c7b2bd29e19ab7b15f30aa905590a77178ddc505735a213dc1'
         name_tag = f'user/app:{tag}'
         self.assertEqual(
             {

@@ -16,10 +16,14 @@ GITHUB_ACTIONS = bool(os.environ.get('GITHUB_ACTIONS'))
 # Keep order the same as the README's list of what affects the hash.
 DOCKER_INPUTS = (
     'annotations',
+    'attests',
+    'provenance',
+    'sbom',
     'build-args',
+    'cgroup-parent',
+    'ulimit',
     'build-contexts',
     'target',
-    'ulimit',
     'labels',
 )
 

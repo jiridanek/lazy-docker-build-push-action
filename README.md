@@ -15,10 +15,11 @@ and the majority of the action's arguments are passed directly to that action.
 The following are automatically included in the identifying hash:
 
 * Annotations
+* Attestation, provenance and SBOM
 * Build args
+* Build cgroup-parent and ulimit
 * Build contexts
 * Build target
-* Build ulimit
 * Labels
 * the Dockerfile itself (no attempt is made to parse it)
 
