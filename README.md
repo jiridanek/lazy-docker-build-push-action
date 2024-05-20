@@ -91,7 +91,7 @@ jobs:
           password: ${{ secrets.DOCKERHUB_TOKEN }}
 
       - name: Build base layer
-        uses: PeterJCLaw/lazy-docker-build-push-action@v0.1
+        uses: PeterJCLaw/lazy-docker-build-push-action@v0.2
         id: build-base
         with:
           context: .
