@@ -181,6 +181,22 @@ runs:
         FILES=$(echo -n "${{ inputs.extra-inputs }}" | tr '\n' ' ')
         python3 ${{ github.action_path }}/main.py ${FILES:+--files $FILES}
 
+    # todo: the action does not seem to be hashing these inputs:
+    #   - secret-envs: ${{ inputs.secret-envs }}
+    #   - secret-files: ${{ inputs.secret-files }}
+    - name: Populate a build sandbox directory
+      if: steps.main.outputs.build-required == 'true'
+      id: sandbox
+      shell: bash
+      env:
+        INPUT_FILE: ${{ inputs.file }}
+        INPUT_CONTEXT: ${{ inputs.context }}
+        INPUT_BUILD-CONTEXTS: ${{ inputs.build-contexts }}
+        INPUT_EXTRA-INPUTS: ${{ inputs.extra-inputs }}
+
+      run: |
+        python3 "${{ github.action_path }}/sandbox.py"
+
     - name: Build image
       uses: docker/build-push-action@v5
       if: steps.main.outputs.build-required == 'true'
@@ -191,12 +207,12 @@ runs:
         annotations: ${{ inputs.annotations }}
         attests: ${{ inputs.attests }}
         build-args: ${{ inputs.build-args }}
-        build-contexts: ${{ inputs.build-contexts }}
+        build-contexts: ${{ steps.sandbox.outputs.build-contexts }}
         builder: ${{ inputs.builder }}
         cache-from: ${{ inputs.cache-from }}
         cache-to: ${{ inputs.cache-to }}
         cgroup-parent: ${{ inputs.cgroup-parent }}
-        context: ${{ inputs.context }}
+        context: ${{ steps.sandbox.outputs.context }}
         file: ${{ inputs.file }}
         labels: ${{ inputs.labels }}
         load: ${{ inputs.load }}
@@ -218,3 +234,9 @@ runs:
         target: ${{ inputs.target }}
         ulimit: ${{ inputs.ulimit }}
         github-token: ${{ inputs.github-token }}
+
+    - name: Delete sandbox directory
+      if: steps.main.outputs.build-required == 'true'
+      id: clean
+      shell: bash
+      run: rm -rf "${{ steps.sandbox.outputs.tmpdir }}"

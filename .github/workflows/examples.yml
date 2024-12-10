@@ -18,7 +18,9 @@ jobs:
         with:
           context: examples/python
           tags: python-example/base
-          extra-inputs: examples/python/requirements.txt
+          extra-inputs:
+            examples/python/src/demo.py
+            examples/python/requirements.txt
 
       - name: Build and push
         uses: docker/build-push-action@v5
