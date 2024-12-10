@@ -24,7 +24,7 @@ def setup_sandbox(paths: list[pathlib.Path], tmpdir: pathlib.Path):
 
 def main() -> int:
     context = pathlib.Path(get_input("context") or ".")
-    extra_inputs = [pathlib.Path(path) for path in get_input("extra-inputs").split('\n')]
+    extra_inputs = [pathlib.Path(path) for path in get_input("extra-inputs").split(' ')]  # todo: why space and not '\n'
     build_contexts = {}
     for build_context in get_input("build-contexts").split('\n'):
         name, *path = build_context.split('=', maxsplit=1)
